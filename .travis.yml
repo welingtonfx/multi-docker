@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t welingtonfx/multi-docker-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run welingtonfx/multi-docker-test npm test -- --coverage
+
+after_success:
+  - docker build -t welingtonfx/multi-client ./client
+  - docker build -t welingtonfx/multi-nginx ./nginx
+  - docker build -t welingtonfx/multi-server ./server
+  - docker build -t welingtonfx/multi-worder ./worker
