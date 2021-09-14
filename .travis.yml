@@ -12,4 +12,12 @@ after_success:
   - docker build -t welingtonfx/multi-client ./client
   - docker build -t welingtonfx/multi-nginx ./nginx
   - docker build -t welingtonfx/multi-server ./server
-  - docker build -t welingtonfx/multi-worder ./worker
+  - docker build -t welingtonfx/multi-worker ./worker
+  #Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push welingtonfx/multi-client
+  - docker push welingtonfx/multi-nginx
+  - docker push welingtonfx/multi-server
+  - docker push welingtonfx/multi-worker
+
